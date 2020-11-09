@@ -1,0 +1,43 @@
+@api = http://localhost:5000
+
+### POST SIGNUP USER
+POST {{api}}/signup
+Content-Type: application/json
+
+{
+    "email": "toni@toni.com",
+    "password": "Toni123"
+}
+
+### POST LOGIN USER
+POST {{api}}/login
+Content-Type: application/json
+
+{
+    "email": "toni@toni.com",
+    "password": "Toni123"
+}
+
+### GET ANNOUNCEMENT LIST
+GET {{api}}/announcements
+
+### GET ANNOUNCEMENT DETAILS
+GET {{api}}/announcements/5fa92d35badfa3b93baef85f
+
+### POST NEW ANNOUNCEMENT
+POST {{api}}/announcements
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE5MjU5MWQ1NjFiMzlkNWI2ZjIxYWIiLCJpYXQiOjE2MDQ5MjIwNTAsImV4cCI6MTYzNjQ1ODA1MH0.91wOJsBgAqnzcCDJbKqsNKIOhTLIvuKq1QRDoqHMses
+Content-Type: application/json
+
+{
+    "title": "test"
+}
+
+### PUT EDITTING ANNOUNCEMENT
+PUT {{api}}/announcements/5fa92d35badfa3b93baef85f
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE5MjU5MWQ1NjFiMzlkNWI2ZjIxYWIiLCJpYXQiOjE2MDQ5MjIwNTAsImV4cCI6MTYzNjQ1ODA1MH0.91wOJsBgAqnzcCDJbKqsNKIOhTLIvuKq1QRDoqHMses
+Content-Type: application/json
+
+{
+    "title": "TEST"
+}
