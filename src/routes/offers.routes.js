@@ -1,8 +1,17 @@
 const router = require('express').Router()
 const isAuthenticated = require('../auth')
+const { Offers, Announcements, Users } = require('../models')
+const { populate } = require('../models/Users.model')
 
-const Offers = require('../models/Offers.model')
-const Announcements = require('../models/Announcement.model')
+router.get('/:id', isAuthenticated, async (req, res) => {
+    try {
+        const offer = await Offers.findById(req.params.id)
+
+        res.status(200).json({ data: offer})
+    } catch (error) {
+        res.status(500).send('Error getting offers details.')
+    }
+})
 
 router.post('/:announcement', isAuthenticated, async (req, res) => {
     try {
@@ -20,10 +29,13 @@ router.post('/:announcement', isAuthenticated, async (req, res) => {
             comments
         })
 
+        const updatedAnnouncement = await Announcements.findByIdAndUpdate(announcement, { $push: { offers: newOffer._id } })
 
-        await Announcements.findByIdAndUpdate(announcement, { $push: { offers: newOffer._id } })
+        await Promise.all([newOffer, updatedAnnouncement])
 
-        res.send(204)
+        await Users.findByIdAndUpdate(_id, { $push: { offers: newOffer._id}})
+
+        res.sendStatus(204)
     } catch (error) {
         res.status(500).send('Error sending offer.')
     }
