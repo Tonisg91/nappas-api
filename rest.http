@@ -22,7 +22,7 @@ Content-Type: application/json
 GET {{api}}/announcements
 
 ### GET ANNOUNCEMENT DETAILS
-GET {{api}}/announcements/5fa92d35badfa3b93baef85f
+GET {{api}}/announcements
 
 ### POST NEW ANNOUNCEMENT
 POST {{api}}/announcements
@@ -30,7 +30,7 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE5MjU5MWQ1NjFiM
 Content-Type: application/json
 
 {
-    "title": "test"
+    "title": "Anuncio 1"
 }
 
 ### PUT EDITTING ANNOUNCEMENT
@@ -41,3 +41,7 @@ Content-Type: application/json
 {
     "title": "TEST"
 }
+
+### PUT EDITTING ANNOUNCEMENT
+DELETE {{api}}/announcements/5fa92d35badfa3b93baef85f
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZmE5MjU5MWQ1NjFiMzlkNWI2ZjIxYWIiLCJpYXQiOjE2MDQ5MjIwNTAsImV4cCI6MTYzNjQ1ODA1MH0.91wOJsBgAqnzcCDJbKqsNKIOhTLIvuKq1QRDoqHMses

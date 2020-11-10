@@ -1,7 +1,7 @@
-const { Schema } = require('mongoose')
+const { Schema, model } = require('mongoose')
 const withAudit = require('./withAudit.model')
 
-module.exports = withAudit('Announcement',
+module.exports = withAudit('Offers',
     {
         professional: {
             type: Schema.Types.ObjectId,

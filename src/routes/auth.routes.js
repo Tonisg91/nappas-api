@@ -1,8 +1,9 @@
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
-const { Users } = require('../models')
 const jwt = require('jsonwebtoken')
 const config = require('../configs/global.config')
+
+const Users = require('../models/Users.model')
 
 
 const signToken = (_id) => {

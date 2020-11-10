@@ -1,12 +1,12 @@
-const { Router } = require('express')
-const router = Router()
-const { Announcements, Users } = require('../models')
+const router = require('express').Router()
 const isAuthenticated = require('../auth')
+
+const Announcements = require('../models/Announcement.model')
 
 router.get('/', async (req, res) => {
     try {
         const currentAnnounces = await Announcements.find({})
-        if (!currentAnnounces) return res.sendStatus(204)
+        if (!currentAnnounces.length) return res.sendStatus(204)
 
         res.status(200).json({ data: currentAnnounces })
     } catch (error) {
@@ -52,8 +52,14 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
-    res.send('deleting announcement')
+router.delete('/:id', isAuthenticated, async (req, res) => {
+    try {
+        const { id } = req.params
+        await Announcements.findByIdAndDelete(id)
+        res.sendStatus(204)
+    } catch (error) {
+        res.status(500).send('Error deleting announcement.')
+    }
 })
 
 module.exports = router

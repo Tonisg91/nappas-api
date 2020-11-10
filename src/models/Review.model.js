@@ -1,7 +1,7 @@
 const { Schema } = require('mongoose')
 const withAudit = require('./withAudit.model')
 
-module.exports = withAudit('Announcement',
+module.exports = withAudit('Review',
     {
         title: {
             type: String,
