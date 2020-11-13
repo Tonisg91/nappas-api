@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const isAuthenticated = require('../auth')
 const { Offers, Announcements, Users } = require('../models')
-const { populate } = require('../models/Users.model')
+const { create } = require('../models/Users.model')
 
 router.get('/:id', isAuthenticated, async (req, res) => {
     try {
@@ -38,6 +38,23 @@ router.post('/:announcement', isAuthenticated, async (req, res) => {
         res.sendStatus(204)
     } catch (error) {
         res.status(500).send('Error sending offer.')
+    }
+})
+
+router.put('/:id', isAuthenticated, async (req, res) => {
+    try {
+        const { _id } = req.user
+        const { createdBy } = await Offers.findById(req.params.id)
+
+        const isCreator = createdBy == _id
+
+        if (!isCreator) return res.sendStatus(401)
+
+        await Offers.findByIdAndUpdate(req.params.id, {...req.body})
+
+        return res.sendStatus(204)
+    } catch (error) {
+        res.status(500).send('Error updating offer.')
     }
 })
 
