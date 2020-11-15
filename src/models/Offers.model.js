@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema } = require('mongoose')
 const withAudit = require('./withAudit.model')
 
 module.exports = withAudit('Offers',
@@ -21,4 +21,5 @@ module.exports = withAudit('Offers',
             type: Boolean,
             default: false,
         }
-    })
+    }
+)

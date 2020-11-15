@@ -1,8 +1,6 @@
 const {Schema, model} = require('mongoose')
 
 const auditProps = {
-    createdAt: { type: Date , default: Date },
-    updatedAt: { type: Date, default: Date },
     createdBy: { type: Schema.Types.ObjectId, ref: 'User'},
     updatedBy: { type: Schema.Types.ObjectId, ref: 'User'}
 }
@@ -12,7 +10,11 @@ const Model = defaultProps => {
         const schema = new Schema({
             ...defaultProps,
             ...props
-        })
+        },
+        {
+            timestamps: true
+        }
+        )
 
         return model(name, schema)
     }
