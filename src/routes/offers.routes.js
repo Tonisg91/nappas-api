@@ -85,12 +85,43 @@ router.delete('/:offerId', isAuthenticated, async (req, res) => {
 })
 
 // Accept offer
-router.post('/:offerId/:')
+router.post('/accept/:offerId', isAuthenticated, async (req, res) => {
+    try {
+        const { _id } = req.user
+        const offer = await Offers.findById(req.params.offerId).populate('announcement')
 
+        const isCreator = String(offer.announcement.createdBy) === String(_id)
 
+        if (!isCreator) return res.sendStatus(401)
 
+        const updateOfferToAccepted = await Offers.findByIdAndUpdate(offer._id, { accepted: true})
+        const updateAnnouncementToAssigned = await Announcements.findByIdAndUpdate(offer.announcement, { 
+            assigned: true, 
+            professional_assigned: offer.createdBy,
+            offer_accepted: offer._id,
+            offers: []
+        })
+        const updateUser = Users.findByIdAndUpdate(offer.createdBy,{
+            $push: {
+                workInProgress: offer.announcement
+            }
+        })
 
+        const updatePromises = [
+            updateOfferToAccepted, 
+            updateAnnouncementToAssigned, 
+            updateUser
+        ]
 
+        await Promise.all([updatePromises])
+        
+        await Offers.deleteMany({announcement: offer.announcement, accepted: false})
+
+        res.sendStatus(202)
+    } catch (error) {
+        res.status(500).send('Error accepting offer.')
+    }
+})
 
 
 

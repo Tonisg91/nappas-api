@@ -27,11 +27,7 @@ module.exports = withAudit('Announcement',
             type: Boolean,
             default: false,
         },
-        announcer: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-        },
-        professional: {
+        professional_assigned: {
             type: Schema.Types.ObjectId,
             ref: "User",
         },
@@ -39,7 +35,7 @@ module.exports = withAudit('Announcement',
             type: Schema.Types.ObjectId,
             ref: 'Offer'
         }],
-        offerAccepted: {
+        offer_accepted: {
             type: Schema.Types.ObjectId,
             ref: 'Offer'
         },
