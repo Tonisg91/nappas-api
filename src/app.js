@@ -8,8 +8,12 @@ const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require(
 
 app.set('port', config.PORT)
 
+app.use(cors({
+    credentials: true,
+    origin: config.CORS_ORIGIN
+}))
 app.use(logger('dev'))
-app.use(cors())
+
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 

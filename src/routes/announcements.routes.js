@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const isAuthenticated = require('../auth')
-
-const Announcements = require('../models/Announcement.model')
+const { Announcements, Users } = require('../models')
+const fileUploader = require('../configs/cloudinary.config')
 
 router.get('/', async (req, res) => {
     try {
@@ -27,15 +27,23 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', isAuthenticated, async (req, res) => {
+router.post('/', isAuthenticated, fileUploader.array('photos') , async (req, res) => {
     try {
         const { _id } = req.user
 
-        await Announcements.create({
+        const photos = req.files.length ? Array.from(req.files).map(f => f.path) : undefined
+        const photoCard = req.files.length ? photos[0] : undefined
+
+        const newAnnouncement = await Announcements.create({
             ...req.body,
+            photos,
+            photoCard,
             createdBy: _id,
             updatedBy: _id
         })
+
+        await Users.findByIdAndUpdate(_id, { $push: { announcements: newAnnouncement._id}})
+
         res.sendStatus(201)
     } catch (error) {
         res.status(500).send('Error creating announcement.')
