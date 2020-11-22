@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         const currentAnnounces = await Announcements.find({})
         if (!currentAnnounces.length) return res.sendStatus(204)
 
-        res.status(200).json({ data: currentAnnounces })
+        res.status(200).json(currentAnnounces)
     } catch (error) {
         res.status(500).send('Error getting meals.')
     }
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res) => {
 
         if (!announcement) res.status(404).send("This announcement doesn't exists.")
 
-        res.status(200).json({ data: announcement })
+        res.status(200).json( announcement )
     } catch (error) {
         res.status(500).send('Error getting announcement details')
     }

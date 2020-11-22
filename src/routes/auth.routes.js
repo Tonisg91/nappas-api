@@ -5,7 +5,6 @@ const config = require('../configs/global.config')
 
 const Users = require('../models/Users.model')
 
-
 const signToken = (_id) => {
     return jwt.sign(
         {_id},
@@ -13,8 +12,6 @@ const signToken = (_id) => {
         {expiresIn: 60 * 60 * 24 * 365}
     )
 }
-
-
 router.post('/signup', async (req, res) => {
     try {
         const { email, password } = req.body
