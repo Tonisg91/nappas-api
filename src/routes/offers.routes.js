@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { isAuthenticated } = require('../middlewares')
+const { isAuthenticated, isAuthorized } = require('../middlewares')
 const { Offers, Announcements, Users } = require('../models')
 
 // Get single offer
@@ -19,15 +19,15 @@ router.get('/:id', isAuthenticated, async (req, res) => {
 //Add offer to announcement
 router.post('/:announcement', isAuthenticated, async (req, res) => {
     try {
-        const { _id } = req.user
         const { announcement } = req.params
         const { estimatedPrice, comments } = req.body
+
 
         if (!estimatedPrice, !comments) return res.status(400).send('Price & comments are mandatory.')
 
         const newOffer = await Offers.create({
-            createdBy: _id,
-            updatedBy: _id,
+            createdBy: req.userId,
+            updatedBy: req.userId,
             announcement,
             estimatedPrice,
             comments
@@ -37,7 +37,7 @@ router.post('/:announcement', isAuthenticated, async (req, res) => {
 
         await Promise.all([newOffer, updatedAnnouncement])
 
-        await Users.findByIdAndUpdate(_id, { $push: { offers: newOffer._id}})
+        await Users.findByIdAndUpdate(req.userId, { $push: { offers: newOffer._id}})
 
         res.sendStatus(202)
     } catch (error) {
@@ -46,15 +46,8 @@ router.post('/:announcement', isAuthenticated, async (req, res) => {
 })
 
 // Edit offer
-router.put('/:id', isAuthenticated, async (req, res) => {
+router.put('/:id', isAuthenticated, isAuthorized, async (req, res) => {
     try {
-        const { _id } = req.user
-        const { createdBy } = await Offers.findById(req.params.id)
-        
-        const isCreator = String(createdBy) === String(_id)
-
-        if (!isCreator) return res.sendStatus(401)
-
         await Offers.findByIdAndUpdate(req.params.id, {...req.body})
 
         return res.sendStatus(202)
@@ -64,15 +57,10 @@ router.put('/:id', isAuthenticated, async (req, res) => {
 })
 
 // Delete offer
-router.delete('/:offerId', isAuthenticated, async (req, res) => {
+router.delete('/:offerId', isAuthenticated, isAuthorized,  async (req, res) => {
     try {
-        const { _id } = req.user
         const { offerId } = req.params
-        const { createdBy, announcement } = await Offers.findById(offerId)
-
-        const isCreator = String(createdBy) === String(_id)
-
-        if (!isCreator) return res.sendStatus(401)
+        const { announcement } = await Offers.findById(offerId)
 
         const deleteOffer = await Offers.findByIdAndDelete(offerId)
         const updatingAnnouncement = await Announcements.findByIdAndUpdate(announcement, { $pullAll: { offers: [offerId]}})
@@ -87,10 +75,9 @@ router.delete('/:offerId', isAuthenticated, async (req, res) => {
 // Accept offer
 router.post('/accept/:offerId', isAuthenticated, async (req, res) => {
     try {
-        const { _id } = req.user
         const offer = await Offers.findById(req.params.offerId).populate('announcement')
 
-        const isCreator = String(offer.announcement.createdBy) === String(_id)
+        const isCreator = offer.announcement.createdBy == req.userId
 
         if (!isCreator) return res.sendStatus(401)
 

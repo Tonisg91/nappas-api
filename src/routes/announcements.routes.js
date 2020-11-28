@@ -1,16 +1,6 @@
 const router = require('express').Router()
 const { isAuthenticated, isAuthorized } = require('../middlewares')
 const { Announcements, Users } = require('../models')
-const fileUploader = require('../configs/cloudinary.config')
-
-router.post('/test', isAuthenticated, isAuthorized, async (req, res) => {
-    
-})
-
-router.post('/test/:id', isAuthenticated, isAuthorized, async (req, res) => {
-    
-})
-
 
 router.get('/', async (req, res) => {
     try {
@@ -28,7 +18,7 @@ router.get('/:id', async (req, res) => {
         const { id } = req.params
         const announcement = await Announcements.findById(id)
 
-        if (!announcement) res.status(404).send("This announcement doesn't exists.")
+        if (!announcement) return res.status(404).send("This announcement doesn't exists.")
 
         res.status(200).json( announcement )
     } catch (error) {
@@ -36,22 +26,16 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', isAuthenticated, fileUploader.array('photos') , async (req, res) => {
+router.post('/', isAuthenticated, async (req, res) => {
     try {
-        const { _id } = req.user
-
-        const photos = req.files.length ? Array.from(req.files).map(f => f.path) : undefined
-        const photoCard = req.files.length ? photos[0] : undefined
 
         const newAnnouncement = await Announcements.create({
             ...req.body,
-            photos,
-            photoCard,
-            createdBy: _id,
-            updatedBy: _id
+            createdBy: req.userId,
+            updatedBy: req.userId
         })
 
-        await Users.findByIdAndUpdate(_id, { $push: { announcements: newAnnouncement._id}})
+        await Users.findByIdAndUpdate(req.userId, { $push: { announcements: newAnnouncement._id}})
 
         res.sendStatus(201)
     } catch (error) {
@@ -59,7 +43,7 @@ router.post('/', isAuthenticated, fileUploader.array('photos') , async (req, res
     }
 })
 
-router.put('/:id', isAuthenticated, async (req, res) => {
+router.put('/:id', isAuthenticated, isAuthorized ,async (req, res) => {
     try {
         const { id } = req.params
         await Announcements.findByIdAndUpdate(id, req.body)
@@ -69,7 +53,7 @@ router.put('/:id', isAuthenticated, async (req, res) => {
     }
 })
 
-router.delete('/:id', isAuthenticated, async (req, res) => {
+router.delete('/:id', isAuthenticated, isAuthorized ,async (req, res) => {
     try {
         const { id } = req.params
         await Announcements.findByIdAndDelete(id)
