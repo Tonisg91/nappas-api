@@ -2,5 +2,6 @@ module.exports = {
     Announcements: require('./Announcement.model'),
     Reviews: require('./Review.model'),
     Offers: require('./Offers.model'),
-    Users: require('./Users.model')
+    Users: require('./Users.model'),
+    Roles: require('./Role.model')
 }

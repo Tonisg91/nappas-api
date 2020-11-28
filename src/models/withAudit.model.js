@@ -12,7 +12,8 @@ const Model = defaultProps => {
             ...props
         },
         {
-            timestamps: true
+            timestamps: true,
+            versionKey: false
         }
         )
 

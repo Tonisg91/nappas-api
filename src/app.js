@@ -2,7 +2,10 @@ const express = require('express')
 const logger = require('morgan')
 const config = require('./configs/global.config')
 const cors = require('cors')
+const createRoles = require('./libs/initialSetup')
+
 const app = express()
+createRoles()
 
 const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require('./routes')
 

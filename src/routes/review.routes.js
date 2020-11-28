@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const isAuthenticated = require('../auth')
+const { isAuthenticated } = require('../middlewares')
 const { Users, Reviews } = require('../models')
 
 router.post('/:professionalId', isAuthenticated, async (req, res) => {

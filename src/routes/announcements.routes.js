@@ -1,7 +1,16 @@
 const router = require('express').Router()
-const isAuthenticated = require('../auth')
+const { isAuthenticated, isAuthorized } = require('../middlewares')
 const { Announcements, Users } = require('../models')
 const fileUploader = require('../configs/cloudinary.config')
+
+router.post('/test', isAuthenticated, isAuthorized, async (req, res) => {
+    
+})
+
+router.post('/test/:id', isAuthenticated, isAuthorized, async (req, res) => {
+    
+})
+
 
 router.get('/', async (req, res) => {
     try {
