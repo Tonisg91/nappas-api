@@ -1,5 +1,5 @@
 const dbModels = require('../models')
-const { capitalize } = require('../utils/stringFn')
+const { getModelNameFromURL } = require('../utils/stringFn')
 
 module.exports = async (req, res, next) => {
     try {
@@ -10,16 +10,11 @@ module.exports = async (req, res, next) => {
         const role = await Roles.findById(user.role)
 
         switch (role.name) {
-            case 'admin':
-                return next()
-            case 'moderator':
+            case 'admin' || 'moderator':
                 return next()
             default:
                 const model = getModelNameFromURL(req.baseUrl)
                 const { createdBy } = await dbModels[model].findById(req.params.id)
-
-                console.log(createdBy);
-                console.log(req.userId);
 
                 const isCreator = createdBy == req.userId
 
@@ -31,7 +26,3 @@ module.exports = async (req, res, next) => {
     }
 }
 
-
-function getModelNameFromURL(str) {
-    return capitalize(str.replace('/api/', ''))
-}

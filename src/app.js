@@ -4,11 +4,16 @@ const config = require('./configs/global.config')
 const cors = require('cors')
 const createRoles = require('./libs/initialSetup')
 
-const app = express()
-createRoles()
-
 const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require('./routes')
 
+
+const app = express()
+
+// Seeds
+createRoles()
+
+
+// Config & middlewares
 app.set('port', config.PORT)
 
 app.use(cors({
@@ -20,9 +25,12 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+
+// Routes
 app.use('/api', authRoutes)
 app.use('/api/offers', offersRoutes)
 app.use('/api/reviews', reviewRoutes)
 app.use('/api/announcements', announcementsRoutes)
+
 
 module.exports = app
