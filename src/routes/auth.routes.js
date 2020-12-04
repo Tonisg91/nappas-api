@@ -1,10 +1,11 @@
 const router = require('express').Router()
-//const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { nodemailer } = require('../libs')
 const config = require('../configs/global.config')
 
 
 const { Users, Roles } = require('../models')
+const confirmationTemplate = require('../templates/confirmationEmail')
 
 const signToken = (_id) => {
     return jwt.sign(
@@ -23,10 +24,17 @@ router.post('/signup', async (req, res) => {
 
         const foundRole = await Roles.findOne({ name: role ? role : 'user' })
 
-        await Users.create({
+        const newUser = await Users.create({
             email, 
             passwordHash: await Users.encryptPassword(password),
             role: foundRole._id
+        })
+
+        await nodemailer.sendMail({
+            from: 'Ñappas',
+            to: email,
+            subject: 'Email confirmation Ñappas',
+            html: confirmationTemplate(email)
         })
 
         res.status(200).send('User created succesfully.')
@@ -34,6 +42,21 @@ router.post('/signup', async (req, res) => {
         res.status(500).send('Signup error.')
     }
 })
+
+router.post('/test', async (req, res) => {
+    const { email } = req.body
+
+    await nodemailer.sendMail({
+        from: 'Ñappas',
+        to: email,
+        subject: 'Email confirmation Ñappas',
+        html: confirmationTemplate(email)
+    })
+
+    res.send('test')
+})
+
+
 
 router.post('/login', async (req, res) => {
     try {        

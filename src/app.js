@@ -2,7 +2,7 @@ const express = require('express')
 const logger = require('morgan')
 const config = require('./configs/global.config')
 const cors = require('cors')
-const createRoles = require('./libs/initialSetup')
+const { initialSetup } = require('./libs')
 
 const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require('./routes')
 
@@ -10,7 +10,7 @@ const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require(
 const app = express()
 
 // Seeds
-createRoles()
+initialSetup()
 
 
 // Config & middlewares

@@ -1,4 +1,4 @@
-const { Chats } = require('./models')
+const { Chats } = require('../models')
 
 exports.handleSockets = (io) => {
     io.on('connection', (socket) => {

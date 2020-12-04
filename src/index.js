@@ -6,7 +6,6 @@ const server = app.listen(app.get('port'), () => {
     console.log('Listen on port' , app.get('port'))
 })
 
-
 const io = require('socket.io')(server, {
     cors: 'http://localhost:3000'
 })
@@ -16,14 +15,14 @@ const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'
 
 io.on("connection", (socket) => {
     console.log(`Client ${socket.id} connected`);
+    //TODO: Finalizar sockets
 
-    // Join a conversation
-    const { roomId } = socket.handshake.query;
-    socket.join(roomId);
+    const { roomId } = socket.handshake.query
 
-    // Listen for new messages
+    //    Listen for new messages
     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
         io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+        // console.log(socket)
     });
 
     // Leave the room if the user closes the socket

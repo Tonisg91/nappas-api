@@ -10,5 +10,7 @@ module.exports = {
     CORS_ORIGIN: process.env.CORS_ORIGIN || 'http://localhost:3000',
     CLOUD_NAME: process.env.CLOUD_NAME,
     CLOUD_KEY: process.env.CLOUD_KEY,
-    CLOUD_SECRET: process.env.CLOUD_SECRET
+    CLOUD_SECRET: process.env.CLOUD_SECRET,
+    GMAIL_ADDRESS: process.env.GMAIL_ADDRESS,
+    GMAIL_PASSWORD: process.env.GMAIL_PASSWORD
 }
