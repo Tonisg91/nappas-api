@@ -2,6 +2,8 @@ const { Schema, model } = require('mongoose')
 const bcrypt = require('bcrypt')
 
 const userSchema = new Schema({
+    name: String,
+    description: String,
     email: {
         type: String,
         required: [true, "Email obligatorio"],
@@ -10,14 +12,17 @@ const userSchema = new Schema({
         lowercase: true,
         trim: true,
     },
-    photo: {
-        type: String,
-        default: 'https://adncultura.org/sites/default/files/styles/mg_user_picture/public/default_images/default-user.png?itok=-m-meRA9'
+    verificated: {
+        type: Boolean,
+        default: false
     },
-    name: String,
     passwordHash: {
         type: String,
         required: [true, "Contraseña obligatoria"],
+    },
+    photo: {
+        type: String,
+        default: 'https://adncultura.org/sites/default/files/styles/mg_user_picture/public/default_images/default-user.png?itok=-m-meRA9'
     },
     announcements: [
         {
@@ -37,7 +42,6 @@ const userSchema = new Schema({
         lat: Number,
         lng: Number,
     },
-    description: String,
     reviews: [{
         type: Schema.Types.ObjectId,
         ref: "Review",

@@ -34,7 +34,7 @@ router.post('/signup', async (req, res) => {
             from: 'Ñappas',
             to: email,
             subject: 'Email confirmation Ñappas',
-            html: confirmationTemplate(email)
+            html: confirmationTemplate(email, newUser._id)
         })
 
         res.status(200).send('User created succesfully.')
@@ -43,20 +43,18 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-router.post('/test', async (req, res) => {
-    const { email } = req.body
+router.post('/verify/:userId', async (req, res) => {
+    try {
+        const { userId } = req.params
+        await Users.findByIdAndUpdate(userId, {
+            verificated: true
+        })
 
-    await nodemailer.sendMail({
-        from: 'Ñappas',
-        to: email,
-        subject: 'Email confirmation Ñappas',
-        html: confirmationTemplate(email)
-    })
-
-    res.send('test')
+        res.status(200).send("Verify has been successful.")
+    } catch (error) {
+        res.status(500).send('Verification error')
+    }
 })
-
-
 
 router.post('/login', async (req, res) => {
     try {        
