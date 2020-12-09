@@ -9,6 +9,8 @@ module.exports = async (req, res, next) => {
         const user = await Users.findById(req.userId)
         const role = await Roles.findById(user.role)
 
+        if (!user.verificated) return res.status(401).send("Unauthorized.")
+
         switch (role.name) {
             case 'admin' || 'moderator':
                 return next()

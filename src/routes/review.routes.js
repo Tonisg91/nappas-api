@@ -1,17 +1,7 @@
 const router = require('express').Router()
 const { isAuthenticated } = require('../middlewares')
-const { Users, Reviews } = require('../models')
+const { reviewC } = require('../controllers')
 
-router.post('/:professionalId', isAuthenticated, async (req, res) => {
-    try {
-        const { professionalId } = req.body
-
-        const newReview = await Reviews.create({...req.body})
-        await Users.findByIdAndUpdate(professionalId, { $push: { reviews: newReview._id } })
-        res.sendStatus(202)
-    } catch (error) {
-        return res.status(500).send('Error sending review.')
-    }
-})
+router.post('/:professionalId', isAuthenticated, reviewC.postReview)
 
 module.exports = router

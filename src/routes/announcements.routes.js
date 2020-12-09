@@ -1,66 +1,20 @@
 const router = require('express').Router()
 const { isAuthenticated, isAuthorized } = require('../middlewares')
-const { Announcements, Users } = require('../models')
+const { announcementC } = require('../controllers')
 
-router.get('/', async (req, res) => {
-    try {
-        const currentAnnounces = await Announcements.find({})
-        if (!currentAnnounces.length) return res.sendStatus(204)
+// GET Announcement list
+router.get('/', announcementC.getAnnouncementList)
 
-        res.status(200).json(currentAnnounces)
-    } catch (error) {
-        res.status(500).send('Error getting meals.')
-    }
-})
+// GET Single announcement
+router.get('/:id', announcementC.getSingleAnnouncement)
 
-router.get('/:id', async (req, res) => {
-    try {
-        const { id } = req.params
-        const announcement = await Announcements.findById(id)
+// POST Add announcement
+router.post('/', isAuthenticated, announcementC.postAddAnnouncement)
 
-        if (!announcement) return res.status(404).send("This announcement doesn't exists.")
+// PUT Edit announcement
+router.put('/:id', isAuthenticated, isAuthorized, announcementC.putEditAnnouncement)
 
-        res.status(200).json( announcement )
-    } catch (error) {
-        res.status(500).send('Error getting announcement details')
-    }
-})
-
-router.post('/', isAuthenticated, async (req, res) => {
-    try {
-
-        const newAnnouncement = await Announcements.create({
-            ...req.body,
-            createdBy: req.userId,
-            updatedBy: req.userId
-        })
-
-        await Users.findByIdAndUpdate(req.userId, { $push: { announcements: newAnnouncement._id}})
-
-        res.sendStatus(201)
-    } catch (error) {
-        res.status(500).send('Error creating announcement.')
-    }
-})
-
-router.put('/:id', isAuthenticated, isAuthorized ,async (req, res) => {
-    try {
-        const { id } = req.params
-        await Announcements.findByIdAndUpdate(id, req.body)
-        res.sendStatus(204)
-    } catch (error) {
-        res.status(500).send('Error updating announcement.')
-    }
-})
-
-router.delete('/:id', isAuthenticated, isAuthorized ,async (req, res) => {
-    try {
-        const { id } = req.params
-        await Announcements.findByIdAndDelete(id)
-        res.sendStatus(204)
-    } catch (error) {
-        res.status(500).send('Error deleting announcement.')
-    }
-})
+// DELETE Announcement
+router.delete('/:id', isAuthenticated, isAuthorized, announcementC.deleteAnnouncement)
 
 module.exports = router

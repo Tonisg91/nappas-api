@@ -1,23 +1,30 @@
-const config = require('../configs/global.config')
-
-const confirmationTemplate = (email, userId) => {
+const confirmationTemplate = (userId) => {
     const template = `
-        <h1>This is a template to verify your account.</h1>
+        <div style = "background: #4D716D; height: 100px; background-size: cover;
+            background - repeat: no - repeat; text - align: center; padding: 35px; font - size: 1.5em; color:#cce0dd; ">
+            </div >
+        <section
+            style="padding: 20px; margin: 50px; border: 2px solid #4D716D; border-radius:40px; text-align: center;">
+            
+            <h1> We are happy to have you with us!</h1 >
+            <p>
+                This is a confirmation email that your <strong>Ñappas</strong> account has been created!<br>
+                <strong>Just miss one last step.</strong>
+            </p>
 
-        <h2>And this is your email: ${email}</h2>
+            <p>Please, enter this link to verify your account</p>
+            <a href="#" >VERIFY</a>
+            <div
+                style="margin-top: 3em"
+            >
+                <img
+                    src="https://res.cloudinary.com/dkejgwlha/image/upload/v1592555603/friends_amcn0b.png"
+                    alt="Nappas logo">
+            </div>
+        </section>
+        `
 
-        <h3>Click on the next link to verificate your account.</h3>
-
-        <form action="${config.URL}/api/verify/${userId}  method="POST">
-            <button type="submit" > 
-                Verify
-            </button>
-        </form>
-
-    `
-
-    //TODO: Cambiar y adecentar plantilla email.
-
+        //TODO: Sustituir links
     return template
 }
 
