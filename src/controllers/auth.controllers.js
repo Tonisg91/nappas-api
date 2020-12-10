@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken')
 const { nodemailer } = require('../libs')
 const config = require('../configs/global.config')
-const fs = require('fs')
 
 const { Users, Roles } = require('../models')
-const confirmationTemplate = require('../templates/confirmationEmail')
+const confirmationTemplate = require('../libs/nodemailer/templates/confirmationEmail')
 
 const signToken = (_id) => {
     return jwt.sign(

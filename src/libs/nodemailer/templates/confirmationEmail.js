@@ -13,7 +13,7 @@ const confirmationTemplate = (userId) => {
             </p>
 
             <p>Please, enter this link to verify your account</p>
-            <a href="#" >VERIFY</a>
+            <a href="#${userId}" >VERIFY</a>
             <div
                 style="margin-top: 3em"
             >
