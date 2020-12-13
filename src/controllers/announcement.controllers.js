@@ -2,7 +2,7 @@ const { Announcements, Users } = require('../models')
 
 const getAnnouncementList = async (req, res) => {
     try {
-        const currentAnnounces = await Announcements.find({})
+        const currentAnnounces = await Announcements.find({assigned: false, finished: false})
         if (!currentAnnounces.length) return res.sendStatus(204)
 
         res.status(200).json(currentAnnounces)
