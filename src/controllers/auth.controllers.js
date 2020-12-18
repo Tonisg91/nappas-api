@@ -4,12 +4,13 @@ const config = require('../configs/global.config')
 
 const { Users, Roles } = require('../models')
 const confirmationTemplate = require('../libs/nodemailer/templates/confirmationEmail')
+const dateService = require('../utils/dateService')
 
 const signToken = (_id) => {
     return jwt.sign(
         { _id },
         String(config.JWT_KEY),
-        { expiresIn: 60 * 60 * 24 * 365 }
+        { expiresIn: 60 * 60 * 24 * 365 } // one year
     )
 }
 
@@ -49,14 +50,15 @@ const postLogin = async (req, res) => {
 
         const userFound = await Users.findOne({ email }).populate('role')
 
-        if (!userFound) return res.status(204).send("User doesn't exists. Please, create an account.")
+        if (!userFound) return res.status(404).send("User doesn't exists. Please, create an account.")
+        if (!userFound.verificated) return res.status(401).send('You need to activate your account. Please, check your email inbox.')
 
         const pwdMatch = await Users.comparePassword(password, userFound.passwordHash)
 
         if (!pwdMatch) return res.status(401).send("Password doesn't match.")
 
         const token = signToken(userFound._id)
-        res.status(200).send(token)
+        res.status(200).json(token)
     } catch (error) {
         res.status(500).send('Login error.')
     }
