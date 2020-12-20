@@ -4,7 +4,7 @@ const config = require('./configs/global.config')
 const cors = require('cors')
 const { initialSetup } = require('./libs')
 
-const { announcementsRoutes, authRoutes, offersRoutes, reviewRoutes } = require('./routes')
+const R = require('./routes')
 
 
 const app = express()
@@ -27,10 +27,11 @@ app.use(express.urlencoded({extended: false}))
 
 
 // Routes
-app.use('/api', authRoutes)
-app.use('/api/offers', offersRoutes)
-app.use('/api/reviews', reviewRoutes)
-app.use('/api/announcements', announcementsRoutes)
+app.use('/api', R.auth)
+app.use('/api/offers', R.offers)
+app.use('/api/reviews', R.review)
+app.use('/api/users', R.users)
+app.use('/api/announcements', R.announcements)
 
 
 module.exports = app

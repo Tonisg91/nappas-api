@@ -1,6 +1,7 @@
 module.exports = {
-    announcementsRoutes: require('./announcements.routes'),
-    reviewRoutes: require('./review.routes'),
-    offersRoutes: require('./offers.routes'),
-    authRoutes: require('./auth.routes')
+    announcements: require('./announcements.routes'),
+    review: require('./review.routes'),
+    offers: require('./offers.routes'),
+    auth: require('./auth.routes'),
+    users: require('./users.routes')
 }

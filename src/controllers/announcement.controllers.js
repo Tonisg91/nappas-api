@@ -7,14 +7,14 @@ const getAnnouncementList = async (req, res) => {
 
         res.status(200).json(currentAnnounces)
     } catch (error) {
-        res.status(500).send('Error getting meals.')
+        res.status(500).send('Error getting announcements.')
     }
 }
 
 const getSingleAnnouncement = async (req, res) => {
     try {
         const { id } = req.params
-        const announcement = await Announcements.findById(id)
+        const announcement = await Announcements.findById(id).populate('createdBy', 'photo name')
 
         if (!announcement) return res.status(404).send("This announcement doesn't exists.")
 
