@@ -2,7 +2,7 @@ const { Announcements, Users } = require('../models')
 
 const getAnnouncementList = async (req, res) => {
     try {
-        const currentAnnounces = await Announcements.find({assigned: false, finished: false})
+        const currentAnnounces = await Announcements.find({assigned: false, finished: false}).populate('createdBy', 'photo name')
         if (!currentAnnounces.length) return res.sendStatus(204)
 
         res.status(200).json(currentAnnounces)

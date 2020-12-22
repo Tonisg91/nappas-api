@@ -1,4 +1,3 @@
-const { response } = require('express')
 const { Users } = require('../models')
 
 const getUserInfo = async (req, res) => {
