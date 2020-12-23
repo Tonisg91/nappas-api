@@ -7,7 +7,13 @@ module.exports = withAudit('Announcement',
             type: String,
             required: [true, "Title is required"],
         },
-        category: String,
+        category: {
+            type: String,
+            required: [true, "Category is required"],
+            enum: ['construccion', 'jardineria', 'informatica', 'mecanica', 'pintura', 'otros'],
+            default: 'otros'
+        },
+        budget: Number,
         description: {
             type: String,
         },
@@ -52,5 +58,5 @@ module.exports = withAudit('Announcement',
             city: String,
             lat: String,
             lng: String
-        }
+        },
 })
