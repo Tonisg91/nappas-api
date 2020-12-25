@@ -56,7 +56,13 @@ module.exports = withAudit('Announcement',
         location: {
             state: String,
             city: String,
-            lat: String,
-            lng: String
+            lat: {
+                type: Number,
+                match: ["[\-\+]?[0-9]*(\.[0-9]+)?", "Match error at lat."]
+            },
+            lng: {
+                type: Number,
+                match: ["[\-\+]?[0-9]*(\.[0-9]+)?", "Match error at lng."]
+            }
         },
 })

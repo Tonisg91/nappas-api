@@ -26,7 +26,6 @@ const getSingleAnnouncement = async (req, res) => {
 
 const postAddAnnouncement = async (req, res) => {
     try {
-
         const newAnnouncement = await Announcements.create({
             ...req.body,
             createdBy: req.userId,
@@ -37,7 +36,8 @@ const postAddAnnouncement = async (req, res) => {
 
         res.sendStatus(201)
     } catch (error) {
-        res.status(500).send('Error creating announcement.')
+        //TODO: ERROR MIDDLEWARE
+        res.status(500).send(error._message ? error._message : 'Error creating announcement.')
     }
 }
 
