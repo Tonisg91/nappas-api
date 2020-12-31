@@ -18,9 +18,9 @@ module.exports = async (req, res, next) => {
                 const model = getModelNameFromURL(req.baseUrl)
                 const { createdBy } = await dbModels[model].findById(req.params.id)
 
-                const isCreator = createdBy == req.userId
+                const isCreator = createdBy === req.userId
 
-                if (!isCreator) return res.status(401).json({message: "Unauthorized"})
+                if (!isCreator) return res.status(401).send("Unauthorized")
                 return next()
         }
     } catch (error) {

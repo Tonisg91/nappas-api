@@ -22,6 +22,21 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+const getMyProfile = async (req, res) => {
+    try {
+        const myProfile = await Users.findById(req.userId).populate('announcements', 'title photoCard').populate('reviews')
+
+        if (!myProfile) return res.status(400).send("User not found")
+
+        res.status(200).json(myProfile)
+    } catch (error) {
+        res.status(500).send('Error getting user details.')
+    }
+}
+
+
+
 module.exports = {
-    getUserInfo
+    getUserInfo,
+    getMyProfile
 }
