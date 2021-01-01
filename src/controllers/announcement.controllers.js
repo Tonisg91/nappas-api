@@ -37,7 +37,7 @@ const postAddAnnouncement = async (req, res) => {
         res.sendStatus(201)
     } catch (error) {
         //TODO: ERROR MIDDLEWARE
-        res.status(500).send(error._message ? error._message : 'Error creating announcement.')
+        res.status(500).send(error.message ? error.message : 'Error creating announcement.')
     }
 }
 

@@ -10,24 +10,26 @@ const io = require('socket.io')(server, {
     cors: 'http://localhost:3000'
 })
 
-const NEW_CHAT_MESSAGE_EVENT = 'newChatMessage'
-
 
 io.on("connection", (socket) => {
     console.log(`Client ${socket.id} connected`);
-    //TODO: Finalizar sockets
+    socket.emit('your id', socket.id)
 
-    const { roomId } = socket.handshake.query
+    socket.on('send message', (body) => {
+        io.emit("message", body)
+    })
+    // //TODO: Finalizar sockets
 
-    //    Listen for new messages
-    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-        // console.log(socket)
-    });
+    // const { roomId } = socket.handshake.query
 
-    // Leave the room if the user closes the socket
+    // //    Listen for new messages
+    // socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+    //     console.log(data)
+    //     io.to(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+    // });
+
+    // // Leave the room if the user closes the socket
     socket.on("disconnect", () => {
         console.log(`Client ${socket.id} diconnected`);
-        socket.leave(roomId);
     });
 });
