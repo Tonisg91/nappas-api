@@ -24,7 +24,7 @@ const getUserInfo = async (req, res) => {
 
 const getMyProfile = async (req, res) => {
     try {
-        const myProfile = await Users.findById(req.userId).populate('announcements', 'title photoCard').populate('reviews')
+        const myProfile = await Users.findById(req.userId, { passwordHash: 0 }).populate('announcements', 'title photoCard').populate('reviews').populate('role', '-_id')
 
         if (!myProfile) return res.status(400).send("User not found")
 
