@@ -22,11 +22,13 @@ const postSignup = async (req, res) => {
         if (userFound) return res.status(200).send('User already exists.')
 
         const foundRole = await Roles.findOne({ name: role ? role : 'user' })
+        const defaultName = `${email.slice(0,4)}${await Users.countDocuments()}`
 
         const newUser = await Users.create({
             email,
             passwordHash: await Users.encryptPassword(password),
-            role: foundRole._id
+            role: foundRole._id,
+            name: defaultName
         })
 
         await nodemailer.sendMail({
