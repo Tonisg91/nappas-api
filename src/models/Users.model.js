@@ -49,7 +49,11 @@ const userSchema = new Schema({
     role: {
         type: Schema.Types.ObjectId,
         ref: 'Role'
-    }
+    },
+    chats: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Chat'
+    }]
 },
     {
         timestamps: {

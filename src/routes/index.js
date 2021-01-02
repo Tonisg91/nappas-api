@@ -3,5 +3,6 @@ module.exports = {
     review: require('./review.routes'),
     offers: require('./offers.routes'),
     auth: require('./auth.routes'),
-    users: require('./users.routes')
+    users: require('./users.routes'),
+    chats: require('./chats.routes')
 }

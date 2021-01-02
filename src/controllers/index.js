@@ -3,5 +3,6 @@ module.exports = {
     authC: require('./auth.controllers'),
     offerC: require('./offer.controllers'),
     reviewC: require('./review.controllers'),
-    usersC: require('./users.controllers')
+    usersC: require('./users.controllers'),
+    chatsC: require('./chat.controllers')
 }
