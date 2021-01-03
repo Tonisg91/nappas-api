@@ -2,7 +2,6 @@ const router = require('express').Router()
 const { isAuthenticated, isAuthorized } = require('../middlewares')
 const { offerC } = require('../controllers')
 
-
 // Get single offer
 router.get('/:id', isAuthenticated, offerC.getSingleOffer)
 

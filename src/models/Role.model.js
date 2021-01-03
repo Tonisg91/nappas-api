@@ -1,10 +1,13 @@
 const { Schema, model } = require('mongoose')
 
-module.exports = model('Role', new Schema(
+module.exports = model(
+  'Role',
+  new Schema(
     {
-        name: String
+      name: String,
     },
     {
-        versionKey: false
+      versionKey: false,
     }
-))
+  )
+)
