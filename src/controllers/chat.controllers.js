@@ -2,7 +2,6 @@ const { Chats, Users } = require('../models')
 
 const getChat = async (req, res) => {
   try {
-    console.log(req.body)
     const hasChat = await Chats.findOne(req.body)
     if (hasChat) return res.status(200).json(hasChat)
 
