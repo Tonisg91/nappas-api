@@ -5,9 +5,11 @@ exports.handleSockets = (io) => {
     console.log(`Client ${socket.id} connected`)
 
     socket.on('getChat', async (body) => {
-      console.log('GETCHAT')
       try {
-        const hasChat = await Chats.findById(body)
+        const hasChat = await Chats.findById(body).populate(
+          'createdBy guestUser announcement',
+          'title name photoCard photo'
+        )
 
         if (hasChat) return io.emit('getChat', hasChat)
 
@@ -22,15 +24,17 @@ exports.handleSockets = (io) => {
       socket.join(chatId)
     })
 
+    socket.on('save messages', async (body) => {
+      console.log(body)
+    })
+
     socket.on('send message', async (body) => {
-      await Chats.findByIdAndUpdate(body.chatId, {
-        $push: { messages: body.msg }
-      })
       io.to(body.chatId).emit('message', body.msg)
     })
     // //TODO: Finalizar sockets
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect', (body) => {
+      console.log(body)
       console.log(`Client ${socket.id} diconnected`)
     })
   })
