@@ -24,17 +24,15 @@ exports.handleSockets = (io) => {
       socket.join(chatId)
     })
 
-    socket.on('save messages', async (body) => {
-      console.log(body)
-    })
-
-    socket.on('send message', async (body) => {
-      io.to(body.chatId).emit('message', body.msg)
+    socket.on('send message', async ({ chatId, msg }) => {
+      try {
+        await Chats.findByIdAndUpdate(chatId, { $push: { messages: msg } })
+        io.to(chatId).emit('message', msg)
+      } catch (error) {}
     })
     // //TODO: Finalizar sockets
 
     socket.on('disconnect', (body) => {
-      console.log(body)
       console.log(`Client ${socket.id} diconnected`)
     })
   })

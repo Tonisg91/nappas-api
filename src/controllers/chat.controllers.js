@@ -18,4 +18,13 @@ const getChat = async (req, res) => {
   }
 }
 
-module.exports = { getChat }
+const updateChat = async (req, res) => {
+  try {
+    await Chats.findByIdAndUpdate(req.params.id, req.body)
+    res.sendStatus(204)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+module.exports = { getChat, updateChat }
