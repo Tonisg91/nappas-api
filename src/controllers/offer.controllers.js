@@ -25,7 +25,7 @@ const postAddOffer = async (req, res) => {
       updatedBy: req.userId,
       announcement,
       estimatedPrice,
-      comments,
+      comments
     })
 
     const updatedAnnouncement = await Announcements.findByIdAndUpdate(
@@ -36,7 +36,7 @@ const postAddOffer = async (req, res) => {
     await Promise.all([newOffer, updatedAnnouncement])
 
     await Users.findByIdAndUpdate(req.userId, {
-      $push: { offers: newOffer._id },
+      $push: { offers: newOffer._id }
     })
 
     res.sendStatus(202)
@@ -84,7 +84,7 @@ const postAcceptOffer = async (req, res) => {
     if (!isCreator) return res.sendStatus(401)
 
     const updateOfferToAccepted = await Offers.findByIdAndUpdate(offer._id, {
-      accepted: true,
+      accepted: true
     })
     const updateAnnouncementToAssigned = await Announcements.findByIdAndUpdate(
       offer.announcement,
@@ -92,26 +92,26 @@ const postAcceptOffer = async (req, res) => {
         assigned: true,
         professional_assigned: offer.createdBy,
         offer_accepted: offer._id,
-        offers: [],
+        offers: []
       }
     )
     const updateUser = Users.findByIdAndUpdate(offer.createdBy, {
       $push: {
-        workInProgress: offer.announcement,
-      },
+        workInProgress: offer.announcement
+      }
     })
 
     const updatePromises = [
       updateOfferToAccepted,
       updateAnnouncementToAssigned,
-      updateUser,
+      updateUser
     ]
 
     await Promise.all([updatePromises])
 
     await Offers.deleteMany({
       announcement: offer.announcement,
-      accepted: false,
+      accepted: false
     })
 
     res.sendStatus(202)
@@ -125,5 +125,5 @@ module.exports = {
   postAddOffer,
   putEditOffer,
   deleteOffer,
-  postAcceptOffer,
+  postAcceptOffer
 }

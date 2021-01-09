@@ -7,17 +7,23 @@ module.exports = model(
       messages: [{}],
       announcement: {
         type: Schema.Types.ObjectId,
-        ref: 'Announcement',
+        ref: 'Announcement'
       },
-      createdBy: String,
-      guestUser: String,
+      createdBy: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
+      guestUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      },
       announcementFound: {
         type: Schema.Types.ObjectId,
-        ref: 'Announcement',
-      },
+        ref: 'Announcement'
+      }
     },
     {
-      timestamps: true,
+      timestamps: true
     }
   )
 )

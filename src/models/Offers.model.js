@@ -4,20 +4,20 @@ const withAudit = require('./withAudit.model')
 module.exports = withAudit('Offers', {
   professional: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User'
   },
   announcement: {
     type: Schema.Types.ObjectId,
-    ref: 'Announcement',
+    ref: 'Announcement'
   },
   estimatedPrice: Number,
   comments: String,
   accepted: {
     type: Boolean,
-    default: false,
+    default: false
   },
   finished: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })

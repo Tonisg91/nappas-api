@@ -4,10 +4,10 @@ module.exports = model(
   'Role',
   new Schema(
     {
-      name: String,
+      name: String
     },
     {
-      versionKey: false,
+      versionKey: false
     }
   )
 )

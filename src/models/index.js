@@ -4,5 +4,5 @@ module.exports = {
   Offers: require('./Offers.model'),
   Users: require('./Users.model'),
   Roles: require('./Role.model'),
-  Chats: require('./Chat.model'),
+  Chats: require('./Chat.model')
 }

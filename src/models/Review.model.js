@@ -4,16 +4,16 @@ const withAudit = require('./withAudit.model')
 module.exports = withAudit('Review', {
   title: {
     type: String,
-    required: [true, 'Title is required'],
+    required: [true, 'Title is required']
   },
   professionalId: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'User'
   },
   description: String,
   rating: {
     type: Number,
     min: 1,
-    max: 5,
-  },
+    max: 5
+  }
 })

@@ -6,7 +6,7 @@ const postReview = async (req, res) => {
 
     const newReview = await Reviews.create({ ...req.body })
     await Users.findByIdAndUpdate(professionalId, {
-      $push: { reviews: newReview._id },
+      $push: { reviews: newReview._id }
     })
     res.sendStatus(202)
   } catch (error) {
@@ -15,5 +15,5 @@ const postReview = async (req, res) => {
 }
 
 module.exports = {
-  postReview,
+  postReview
 }

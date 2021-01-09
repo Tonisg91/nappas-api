@@ -15,7 +15,7 @@ const getUserInfo = async (req, res) => {
       announcements,
       reviews,
       _id,
-      name,
+      name
     }
     res.status(200).json(responseBody)
   } catch (error) {
@@ -29,6 +29,16 @@ const getMyProfile = async (req, res) => {
       .populate('announcements', 'title photoCard')
       .populate('reviews')
       .populate('role', '-_id')
+      .populate({
+        path: 'chats',
+        populate: [
+          {
+            path: 'announcement guestUser createdBy',
+            select: 'title name'
+          }
+        ]
+      })
+      .populate('chats.createdBy')
 
     if (!myProfile) return res.status(400).send('User not found')
 
@@ -40,5 +50,5 @@ const getMyProfile = async (req, res) => {
 
 module.exports = {
   getUserInfo,
-  getMyProfile,
+  getMyProfile
 }

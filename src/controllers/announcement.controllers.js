@@ -4,7 +4,7 @@ const getAnnouncementList = async (req, res) => {
   try {
     const currentAnnounces = await Announcements.find({
       assigned: false,
-      finished: false,
+      finished: false
     }).populate('createdBy', 'photo name')
     if (!currentAnnounces.length) return res.sendStatus(204)
 
@@ -36,11 +36,11 @@ const postAddAnnouncement = async (req, res) => {
     const newAnnouncement = await Announcements.create({
       ...req.body,
       createdBy: req.userId,
-      updatedBy: req.userId,
+      updatedBy: req.userId
     })
 
     await Users.findByIdAndUpdate(req.userId, {
-      $push: { announcements: newAnnouncement._id },
+      $push: { announcements: newAnnouncement._id }
     })
 
     res.sendStatus(201)
@@ -77,5 +77,5 @@ module.exports = {
   getSingleAnnouncement,
   postAddAnnouncement,
   putEditAnnouncement,
-  deleteAnnouncement,
+  deleteAnnouncement
 }

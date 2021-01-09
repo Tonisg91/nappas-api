@@ -5,8 +5,8 @@ const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: config.GMAIL_ADDRESS,
-    pass: config.GMAIL_PASSWORD,
-  },
+    pass: config.GMAIL_PASSWORD
+  }
 })
 
 module.exports = transporter

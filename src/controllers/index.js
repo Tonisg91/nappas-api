@@ -4,5 +4,5 @@ module.exports = {
   offerC: require('./offer.controllers'),
   reviewC: require('./review.controllers'),
   usersC: require('./users.controllers'),
-  chatsC: require('./chat.controllers'),
+  chatsC: require('./chat.controllers')
 }

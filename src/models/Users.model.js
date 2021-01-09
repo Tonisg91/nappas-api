@@ -11,62 +11,62 @@ const userSchema = new Schema(
       match: [/^\S+@\S+\.\S+$/, 'Dirección de correo inválida'],
       unique: true,
       lowercase: true,
-      trim: true,
+      trim: true
     },
     verificated: {
       type: Boolean,
-      default: false,
+      default: false
     },
     passwordHash: {
       type: String,
-      required: [true, 'Contraseña obligatoria'],
+      required: [true, 'Contraseña obligatoria']
     },
     photo: {
       type: String,
       default:
-        'https://adncultura.org/sites/default/files/styles/mg_user_picture/public/default_images/default-user.png?itok=-m-meRA9',
+        'https://adncultura.org/sites/default/files/styles/mg_user_picture/public/default_images/default-user.png?itok=-m-meRA9'
     },
     announcements: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Announcement',
-      },
+        ref: 'Announcement'
+      }
     ],
     workInProgress: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Announcement',
-      },
+        ref: 'Announcement'
+      }
     ],
     location: {
       state: String,
       city: String,
       lat: Number,
-      lng: Number,
+      lng: Number
     },
     reviews: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Review',
-      },
+        ref: 'Review'
+      }
     ],
     role: {
       type: Schema.Types.ObjectId,
-      ref: 'Role',
+      ref: 'Role'
     },
     chats: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Chat',
-      },
-    ],
+        ref: 'Chat'
+      }
+    ]
   },
   {
     timestamps: {
       createdAt: 'createdAt',
-      updatedAt: 'updatedAt',
+      updatedAt: 'updatedAt'
     },
-    versionKey: false,
+    versionKey: false
   }
 )
 

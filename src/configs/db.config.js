@@ -5,7 +5,7 @@ const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
-  useFindAndModify: false,
+  useFindAndModify: false
   // user: config.MONGO_USER,
   // pass: config.MONGO_PASSWORD
 }

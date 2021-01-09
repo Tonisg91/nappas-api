@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const auditProps = {
   createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
-  updatedBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  updatedBy: { type: Schema.Types.ObjectId, ref: 'User' }
 }
 
 const Model = (defaultProps) => {
@@ -10,11 +10,11 @@ const Model = (defaultProps) => {
     const schema = new Schema(
       {
         ...defaultProps,
-        ...props,
+        ...props
       },
       {
         timestamps: true,
-        versionKey: false,
+        versionKey: false
       }
     )
 

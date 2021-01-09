@@ -7,5 +7,5 @@ function getModelNameFromURL(baseUrl) {
 
 module.exports = {
   capitalize,
-  getModelNameFromURL,
+  getModelNameFromURL
 }

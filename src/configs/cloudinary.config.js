@@ -6,7 +6,7 @@ const multer = require('multer')
 cloudinary.config({
   cloud_name: config.CLOUD_NAME,
   api_key: config.CLOUD_KEY,
-  api_secret: config.CLOUD_SECRET,
+  api_secret: config.CLOUD_SECRET
 })
 
 const storage = new CloudinaryStorage({
@@ -14,8 +14,8 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'Nappas',
     format: async (req, file) => 'png',
-    public_id: (req, file) => file.originalname,
-  },
+    public_id: (req, file) => file.originalname
+  }
 })
 
 module.exports = multer({ storage })

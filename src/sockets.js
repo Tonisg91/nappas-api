@@ -24,7 +24,7 @@ exports.handleSockets = (io) => {
 
     socket.on('send message', async (body) => {
       await Chats.findByIdAndUpdate(body.chatId, {
-        $push: { messages: body.msg },
+        $push: { messages: body.msg }
       })
       io.to(body.chatId).emit('message', body.msg)
     })

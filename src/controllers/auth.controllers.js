@@ -29,14 +29,14 @@ const postSignup = async (req, res) => {
       email,
       passwordHash: await Users.encryptPassword(password),
       role: foundRole._id,
-      name: defaultName,
+      name: defaultName
     })
 
     await nodemailer.sendMail({
       from: 'Ñappas',
       to: email,
       subject: 'Email confirmation Ñappas',
-      html: confirmationTemplate(newUser._id),
+      html: confirmationTemplate(newUser._id)
     })
 
     res.status(200).send('User created succesfully.')
@@ -82,7 +82,7 @@ const postVerify = async (req, res) => {
   try {
     const { userId } = req.params
     await Users.findByIdAndUpdate(userId, {
-      verificated: true,
+      verificated: true
     })
 
     res.status(200).send('Verify has been successful.')
@@ -94,5 +94,5 @@ const postVerify = async (req, res) => {
 module.exports = {
   postSignup,
   postLogin,
-  postVerify,
+  postVerify
 }
