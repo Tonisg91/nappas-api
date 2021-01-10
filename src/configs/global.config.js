@@ -13,5 +13,10 @@ module.exports = {
   CLOUD_KEY: process.env.CLOUD_KEY,
   CLOUD_SECRET: process.env.CLOUD_SECRET,
   GMAIL_ADDRESS: process.env.GMAIL_ADDRESS,
-  GMAIL_PASSWORD: process.env.GMAIL_PASSWORD
+  GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
+  AWS_CONFIG: {
+    secretAccessKey: process.env.AWS_SECRET,
+    accessKeyId: process.env.AWS_ACCESS,
+    region: 'eu-west-3'
+  }
 }

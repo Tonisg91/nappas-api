@@ -26,7 +26,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Routes
-app.use('/api', R.auth, R.chats)
+app.use('/api', R.auth, R.chats, R.upload)
 app.use('/api/offers', R.offers)
 app.use('/api/reviews', R.review)
 app.use('/api/users', R.users)

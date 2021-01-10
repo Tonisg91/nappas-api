@@ -4,5 +4,6 @@ module.exports = {
   offers: require('./offers.routes'),
   auth: require('./auth.routes'),
   users: require('./users.routes'),
-  chats: require('./chats.routes')
+  chats: require('./chats.routes'),
+  upload: require('./upload.routes')
 }
