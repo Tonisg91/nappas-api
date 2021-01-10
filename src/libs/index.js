@@ -1,4 +1,4 @@
 module.exports = {
-  initialSetup: require('./initialSetup'),
-  nodemailer: require('./nodemailer')
+    initialSetup: require('./initialSetup'),
+    nodemailer: require('./nodemailer')
 }

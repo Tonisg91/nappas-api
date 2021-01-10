@@ -15,10 +15,10 @@ initialSetup()
 app.set('port', config.PORT)
 
 app.use(
-  cors({
-    credentials: true,
-    origin: config.CORS_ORIGIN
-  })
+    cors({
+        credentials: true,
+        origin: config.CORS_ORIGIN
+    })
 )
 app.use(logger('dev'))
 

@@ -1,11 +1,11 @@
 const capitalize = (str) =>
-  str.replace(str.charAt(0), str.charAt(0).toUpperCase())
+    str.replace(str.charAt(0), str.charAt(0).toUpperCase())
 
 function getModelNameFromURL(baseUrl) {
-  return capitalize(baseUrl.replace('/api/', ''))
+    return capitalize(baseUrl.replace('/api/', ''))
 }
 
 module.exports = {
-  capitalize,
-  getModelNameFromURL
+    capitalize,
+    getModelNameFromURL
 }

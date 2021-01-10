@@ -13,18 +13,18 @@ router.post('/', isAuthenticated, announcementC.postAddAnnouncement)
 
 // PUT Edit announcement
 router.put(
-  '/:id',
-  isAuthenticated,
-  isAuthorized,
-  announcementC.putEditAnnouncement
+    '/:id',
+    isAuthenticated,
+    isAuthorized,
+    announcementC.putEditAnnouncement
 )
 
 // DELETE Announcement
 router.delete(
-  '/:id',
-  isAuthenticated,
-  isAuthorized,
-  announcementC.deleteAnnouncement
+    '/:id',
+    isAuthenticated,
+    isAuthorized,
+    announcementC.deleteAnnouncement
 )
 
 module.exports = router

@@ -1,5 +1,5 @@
 const confirmationTemplate = (userId) => {
-  const template = `
+    const template = `
         <div style = "background: #4D716D; height: 100px; background-size: cover;
             background - repeat: no - repeat; text - align: center; padding: 35px; font - size: 1.5em; color:#cce0dd; ">
             </div >
@@ -24,8 +24,8 @@ const confirmationTemplate = (userId) => {
         </section>
         `
 
-  // TODO: Sustituir links
-  return template
+    // TODO: Sustituir links
+    return template
 }
 
 module.exports = confirmationTemplate
