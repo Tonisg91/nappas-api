@@ -1,13 +1,13 @@
 const router = require('express').Router()
 const upload = require('../services/image-upload')
+const { isAuthenticated } = require('../middlewares')
+const { uploadC } = require('../controllers')
 
-router.post('/upload', upload.array('file', 5), async (req, res) => {
-  try {
-    const locations = req.files.map((f) => f.location)
-    res.send(locations)
-  } catch (error) {
-    console.error(error)
-  }
-})
+router.post(
+    '/upload',
+    isAuthenticated,
+    upload.array('file', 5),
+    uploadC.uploadImages
+)
 
 module.exports = router
