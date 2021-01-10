@@ -9,9 +9,6 @@
         "standard",
         "prettier"
     ],
-    "plugins": [
-        "prettier"
-    ],
     "parserOptions": {
         "ecmaVersion": 12
     },
