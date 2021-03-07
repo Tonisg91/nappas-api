@@ -3,28 +3,22 @@ const { getModelNameFromURL } = require('../utils/stringFn')
 
 module.exports = async (req, res, next) => {
     try {
-        const { Users, Roles } = dbModels
+        const { user } = req
 
-        const user = await Users.findById(req.userId)
-        const role = await Roles.findById(user.role)
+        const userFound = await dbModels.Users.findById(user._id)
 
-        if (!user.verificated) return res.status(401).send('Unauthorized.')
+        if (!userFound.verificated) return res.status(401).send('Unauthorized.')
 
-        switch (role.name) {
-            case 'admin' || 'moderator':
-                return next()
-            default:
-                const model = getModelNameFromURL(req.baseUrl)
-                const { createdBy } = await dbModels[model].findById(
-                    req.params.id
-                )
+        if (user.role !== 'user') return next()
 
-                const isCreator = createdBy === req.userId
+        const model = getModelNameFromURL(req.baseUrl)
+        const { createdBy } = await dbModels[model].findById(req.params.id)
 
-                if (!isCreator) return res.status(401).send('Unauthorized')
-                return next()
-        }
+        const isCreator = createdBy === user._id
+
+        if (!isCreator) return res.status(401).send('Unauthorized')
+        next()
     } catch (error) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).send('Unauthorized')
     }
 }

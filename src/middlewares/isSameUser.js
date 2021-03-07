@@ -2,12 +2,14 @@ const Users = require('../models/Users.model')
 
 module.exports = async (req, res, next) => {
     try {
-        const { _id } = await Users.findById(req.userId, { passwordHash: 0 })
+        const { user } = req
 
-        if (!_id === req.userId) return res.status(404).send('Unauthorized')
+        const { _id } = await Users.findById(user._id, { passwordHash: 0 })
+
+        if (!_id === user._id) return res.status(404).send('Unauthorized')
 
         next()
     } catch (error) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).send('Unauthorized')
     }
 }

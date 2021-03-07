@@ -5,12 +5,14 @@ const config = require('../configs/global.config')
 const { Users, Roles } = require('../models')
 const confirmationTemplate = require('../libs/nodemailer/templates/confirmationEmail')
 
-const signToken = (_id) => {
-    return jwt.sign(
-        { _id },
+const signToken = (_id, role) => {
+    const token = jwt.sign(
+        { _id, role },
         String(config.JWT_KEY),
         { expiresIn: 60 * 60 * 24 * 365 } // one year
     )
+
+    return `Bearer ${token}`
 }
 
 const postSignup = async (req, res) => {
@@ -23,16 +25,12 @@ const postSignup = async (req, res) => {
         if (userFound) return res.status(200).send('User already exists.')
 
         const foundRole = await Roles.findOne({ name: role || 'user' })
-        const defaultName = `${email.slice(
-            0,
-            4
-        )}${await Users.countDocuments()}`
 
         const newUser = await Users.create({
             email,
             passwordHash: await Users.encryptPassword(password),
             role: foundRole._id,
-            name: defaultName
+            name: await Users.makeDefaultName(email)
         })
 
         await nodemailer.sendMail({
@@ -74,7 +72,7 @@ const postLogin = async (req, res) => {
 
         if (!pwdMatch) return res.status(401).send("Password doesn't match.")
 
-        const token = signToken(userFound._id)
+        const token = signToken(userFound._id, userFound.role.name)
         res.status(200).json({ token })
     } catch (error) {
         res.status(500).send('Login error.')

@@ -72,11 +72,15 @@ const userSchema = new Schema(
 
 userSchema.statics.encryptPassword = async (password) => {
     const salt = bcrypt.genSaltSync(10)
-    return await bcrypt.hashSync(password, salt)
+    return bcrypt.hashSync(password, salt)
 }
 
 userSchema.statics.comparePassword = async (password, receivedPassword) => {
-    return await bcrypt.compareSync(password, receivedPassword)
+    return bcrypt.compareSync(password, receivedPassword)
+}
+
+userSchema.statics.makeDefaultName = async (email) => {
+    return `${email.slice(0, 4)}${await model('Users').countDocuments()}`
 }
 
 module.exports = model('User', userSchema)
